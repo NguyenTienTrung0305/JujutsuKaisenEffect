@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css?family=Bangers");
+
+body {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    width: 100%;
+    background: black;
+    margin: 0;
+    font-family: "Bangers" , sans-serif;
+}
+
+.container {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    display: grid;
+}
+
+.container {
+    /* định nghĩa 5 cột và mỗi cột có tỉ lệ là 1fr */
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    /* Khoảng cách giữa hàng và cột trong lưới */
+    gap: 1em;
+    transition: all 400ms;
+}
+
+.container:hover .box {
+    /* grayscale(100%): Chuyển đổi hình ảnh thành hình ảnh xám đen-trắng (grayscale) với mức độ là 100%, tức là hình ảnh trở thành hoàn toàn xám đen. */
+    filter: grayscale(100%) opacity(24%);
+}
+
+.box {
+    position: relative;
+    background: var(--img) center center;
+    background-size: cover;
+    transition: all 400ms;
+    display: flex;
+    justify-content: center;
+}
+
+.container .box:hover {
+    filter: grayscale(0%) opacity(100%);
+    cursor: pointer;
+}
+
+.container {
+    --layout-1: 3fr 1fr 1fr 1fr 1fr;
+    --layout-2: 1fr 3fr 1fr 1fr 1fr;
+    --layout-3: 1fr 1fr 3fr 1fr 1fr;
+    --layout-4: 1fr 1fr 1fr 3fr 1fr;
+    --layout-5: 1fr 1fr 1fr 1fr 3fr;
+
+    /* Trong class lồng nhau & thường được sử dụng để tham chiếu đến chính lớp cha
+    Trong trường hợp này & tham chiếu đến container */
+
+    /* Container chứa thằng box-1 đang được hover thì bố cục là --layout-1 */
+    &:has(.box-1:hover) {
+        grid-template-columns: var(--layout-1);
+    }
+    
+    &:has(.box-2:hover) {
+        grid-template-columns: var(--layout-2);
+    }
+    
+    &:has(.box-3:hover) {
+        grid-template-columns: var(--layout-3);
+    }
+    
+    &:has(.box-4:hover) {
+        grid-template-columns: var(--layout-4);
+    }
+    
+    &:has(.box-5:hover) {
+        grid-template-columns: var(--layout-5);
+    }
+}
+
+.box {
+    &:nth-child(odd) {
+        transform: translateY(-16px);
+    }
+
+    &:nth-child(even) {
+        transform: translateY(16px);
+    }
+    
+    &::before {
+        content: attr(data-text);
+        position: absolute;
+        color: #fff;
+        background: #000;
+        bottom: 20px;
+        padding: 10px 10px 10px 14px;
+
+        /* Khoảng cách giữa các kí tự */
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        transition: all 400ms;
+        opacity: 0;
+    }
+
+    &:hover::before {
+        transform: translateY(0);
+        opacity: 1;
+        transition-delay: 200ms;
+    }
+}
